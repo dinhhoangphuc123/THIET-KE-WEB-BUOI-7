@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chuyển hướng đến đường link</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<style>
+  body {margin: 30px; font-family: Arial, sans-serif;}
+  input, button {padding: 6px; margin-top: 10px;}
+  h1 {font-size: 18px;}
+</style>
+</head>
+<body>
+  <h1>Nhập đường link và nhấn "Submit" để chuyển hướng:</h1>
+  <form id="linkForm_DOM">
+    <input type="text" id="linkInput_DOM" placeholder="Nhập đường link">
+    <button type="submit">Submit (DOM)</button>
+  </form>
+  <form id="linkForm_JQ">
+    <input type="text" id="linkInput_JQ" placeholder="Nhập đường link">
+    <button type="submit">Submit (jQuery)</button>
+  </form>
+  <script>
+    document.getElementById("linkForm_DOM").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var link = document.getElementById("linkInput_DOM").value.trim();
+      if (link === "") {
+        alert("Vui lòng nhập đường link!");
+        return;
+      }
+      var confirmAction = confirm("Bạn có muốn chuyển đến đường link này không?");
+      if (confirmAction) {
+        window.location.href = link;
+      } else {
+        alert("Đã hủy chuyển hướng (DOM).");
+      }
+    });
+    $(document).ready(function() {
+      $("#linkForm_JQ").on("submit", function(e) {
+        e.preventDefault();
+
+        var link = $("#linkInput_JQ").val().trim();
+
+        if (link === "") {
+          alert("Vui lòng nhập đường link!");
+          return;
+        }
+
+        if (confirm("Bạn có muốn chuyển đến đường link này không?")) {
+          window.location.href = link;
+        } else {
+          alert("Đã hủy chuyển hướng (jQuery).");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
