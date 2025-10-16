@@ -1,0 +1,50 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+<style type="text/css">  
+body {margin: 30px; font-family: Arial, sans-serif;}  
+select, input {margin: 5px; padding: 5px;}  
+</style>   
+<meta charset="utf-8" />  
+<title>Remove items from a dropdown list</title>  
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>  
+<body>  
+<form>  
+  <select id="colorSelect">  
+    <option>Red</option>  
+    <option>Green</option>  
+    <option>White</option>  
+    <option>Black</option>  
+  </select>  
+  <input type="button" onclick="removecolor()" value="Select and Remove (DOM)">  
+  <input type="button" id="removeJQ" value="Select and Remove (jQuery)">
+</form>  
+<p id="result"></p>
+<script>
+  function removecolor() {
+    var selectBox = document.getElementById("colorSelect");
+    var selectedIndex = selectBox.selectedIndex;
+    if (selectedIndex === -1) {
+      document.getElementById("result").innerHTML = "Chưa chọn màu nào để xóa (DOM).";
+      return;
+    }
+    var removedColor = selectBox.options[selectedIndex].text;
+    selectBox.remove(selectedIndex);
+    document.getElementById("result").innerHTML = "Đã xóa (DOM): " + removedColor;
+  }
+  $(document).ready(function() {
+    $("#removeJQ").click(function() {
+      var selected = $("#colorSelect option:selected");
+      if (selected.length === 0) {
+        $("#result").text("Chưa chọn màu nào để xóa (jQuery).");
+        return;
+      }
+      var removedColor = selected.text();
+      selected.remove();
+      $("#result").text("Đã xóa (jQuery): " + removedColor);
+    });
+  });
+</script>
+</body>  
+</html>
