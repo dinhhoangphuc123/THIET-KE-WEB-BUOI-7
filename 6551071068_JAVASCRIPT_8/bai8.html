@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Mini Calculator - DOM & jQuery</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<style>
+  body {margin: 30px; font-family: Arial;}
+  input, button {padding: 5px; margin: 3px;}
+  button {width: 40px;}
+</style>
+</head>
+<body>
+<h3>Máy tính mini (DOM và jQuery)</h3>
+<div>
+  <h4>DOM</h4>
+  <input type="number" id="num1_dom" placeholder="Số 1">
+  <button onclick="calcDOM('+')">+</button>
+  <button onclick="calcDOM('-')">-</button>
+  <button onclick="calcDOM('*')">x</button>
+  <button onclick="calcDOM('/')">/</button>
+  <button onclick="calcDOM('^')">^</button>
+  <input type="number" id="num2_dom" placeholder="Số 2">
+  =
+  <input type="text" id="result_dom" readonly>
+</div>
+<hr>
+<div>
+  <h4> jQuery</h4>
+  <input type="number" id="num1_jq" placeholder="Số 1">
+  <button class="op" data-op="+">+</button>
+  <button class="op" data-op="-">-</button>
+  <button class="op" data-op="*">x</button>
+  <button class="op" data-op="/">/</button>
+  <button class="op" data-op="^">^</button>
+  <input type="number" id="num2_jq" placeholder="Số 2">
+  =
+  <input type="text" id="result_jq" readonly>
+</div>
+<script>
+  function calcDOM(op) {
+    var num1 = parseFloat(document.getElementById("num1_dom").value);
+    var num2 = parseFloat(document.getElementById("num2_dom").value);
+    var result;
+    if (isNaN(num1) || isNaN(num2)) {
+      alert("Vui lòng nhập đủ hai số!");
+      return;
+    }
+    switch(op) {
+      case '+': result = num1 + num2; break;
+      case '-': result = num1 - num2; break;
+      case '*': result = num1 * num2; break;
+      case '/': result = num2 !== 0 ? num1 / num2 : "Lỗi chia 0"; break;
+      case '^': result = Math.pow(num1, num2); break;
+      default: result = "Lỗi";
+    }
+    document.getElementById("result_dom").value = result;
+  }
+  $(document).ready(function() {
+    $(".op").click(function() {
+      var op = $(this).data("op");
+      var num1 = parseFloat($("#num1_jq").val());
+      var num2 = parseFloat($("#num2_jq").val());
+      var result;
+      if (isNaN(num1) || isNaN(num2)) {
+        alert("Vui lòng nhập đủ hai số!");
+        return;
+      }
+      switch(op) {
+        case '+': result = num1 + num2; break;
+        case '-': result = num1 - num2; break;
+        case '*': result = num1 * num2; break;
+        case '/': result = num2 !== 0 ? num1 / num2 : "Lỗi chia 0"; break;
+        case '^': result = Math.pow(num1, num2); break;
+        default: result = "Lỗi";
+      }
+      $("#result_jq").val(result);
+    });
+  });
+</script>
+</body>
+</html>
