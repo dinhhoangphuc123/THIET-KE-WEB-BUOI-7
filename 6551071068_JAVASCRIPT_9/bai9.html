@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Form Validation Exercise</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<style>
+  body {margin: 30px; font-family: Arial;}
+  form {width: 350px; padding: 20px; border: 1px solid #ccc; border-radius: 8px;}
+  input, select {width: 95%; padding: 6px; margin: 5px 0;}
+  button {padding: 6px 12px; margin-right: 8px;}
+  label {font-weight: bold;}
+</style>
+</head>
+<body>
+  <h2>Personal Information</h2>
+  <form id="userForm">
+    <label>Enter name: *</label><br>
+    <input type="text" id="name"><br>
+    <label>Sex: *</label><br>
+    <input type="radio" name="sex" value="Male"> Male
+    <input type="radio" name="sex" value="Female"> Female<br>
+    <label>Enter email address: *</label><br>
+    <input type="text" id="email"><br>
+    <label>Enter birthday (MM/DD/YYYY): *</label><br>
+    <input type="text" id="birthday" placeholder="MM/DD/YYYY"><br>
+    <label>Enter street address:</label><br>
+    <input type="text" id="address"><br>
+    <label>Enter city:</label><br>
+    <input type="text" id="city"><br>
+    <label>Select a region:</label><br>
+    <select id="region">
+      <option value="">-- Select --</option>
+      <option>North</option>
+      <option>Central</option>
+      <option>South</option>
+    </select><br>
+    <label>Enter 5-digit ZIP code: *</label><br>
+    <input type="text" id="zip"><br><br>
+    <button type="button" onclick="clearForm()">Clear (DOM)</button>
+    <button type="button" id="clearJQ">Clear (jQuery)</button><br><br>
+    <button type="button" onclick="validateForm()">Finish (DOM)</button>
+    <button type="button" id="finishJQ">Finish (jQuery)</button>
+  </form>
+  <script>
+    function clearForm() {
+      document.getElementById("userForm").reset();
+      alert("Form đã được xóa (DOM)");
+    }
+    function validateForm() {
+      var name = document.getElementById("name").value.trim();
+      var email = document.getElementById("email").value.trim();
+      var birthday = document.getElementById("birthday").value.trim();
+      var zip = document.getElementById("zip").value.trim();
+      var sexChecked = document.querySelector('input[name="sex"]:checked');
+      if (!name || !email || !birthday || !zip || !sexChecked) {
+        alert("Vui lòng điền đầy đủ các trường có dấu * (DOM)");
+        return;
+      }
+      var emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
+      if (!emailPattern.test(email)) {
+        alert("Email không hợp lệ (DOM)");
+        return;
+      }
+      var datePattern = /^(0?[1-9]|1[0-2])[\/\-](0?[1-9]|[12]\d|3[01])[\/\-]\d{4}$/;
+      if (!datePattern.test(birthday)) {
+        alert("Ngày sinh không hợp lệ (DOM)");
+        return;
+      }
+      var year = parseInt(birthday.split(/[\/\-]/)[2]);
+      var currentYear = new Date().getFullYear();
+      if (year >= currentYear) {
+        alert("Năm sinh phải nhỏ hơn năm hiện tại (DOM)");
+        return;
+      }
+      var zipPattern = /^\d{5}$/;
+      if (!zipPattern.test(zip)) {
+        alert("Zip code phải có đúng 5 chữ số (DOM)");
+        return;
+      }
+
+      alert("Tất cả dữ liệu hợp lệ! (DOM)");
+    }
+    $(document).ready(function() {
+      $("#clearJQ").click(function() {
+        $("#userForm")[0].reset();
+        alert("Form đã được xóa (jQuery)");
+      });
+      $("#finishJQ").click(function() {
+        var name = $("#name").val().trim();
+        var email = $("#email").val().trim();
+        var birthday = $("#birthday").val().trim();
+        var zip = $("#zip").val().trim();
+        var sexChecked = $("input[name='sex']:checked").length > 0;
+        if (!name || !email || !birthday || !zip || !sexChecked) {
+          alert("Vui lòng điền đầy đủ các trường có dấu * (jQuery)");
+          return;
+        }
+        var emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
+        if (!emailPattern.test(email)) {
+          alert("Email không hợp lệ (jQuery)");
+          return;
+        }
+        var datePattern = /^(0?[1-9]|1[0-2])[\/\-](0?[1-9]|[12]\d|3[01])[\/\-]\d{4}$/;
+        if (!datePattern.test(birthday)) {
+          alert("Ngày sinh không hợp lệ (jQuery)");
+          return;
+        }
+        var year = parseInt(birthday.split(/[\/\-]/)[2]);
+        var currentYear = new Date().getFullYear();
+        if (year >= currentYear) {
+          alert("Năm sinh phải nhỏ hơn năm hiện tại (jQuery)");
+          return;
+        }
+        var zipPattern = /^\d{5}$/;
+        if (!zipPattern.test(zip)) {
+          alert("Zip code phải có đúng 5 chữ số (jQuery)");
+          return;
+        }
+        alert("Tất cả dữ liệu hợp lệ! (jQuery)");
+      });
+    });
+  </script>
+</body>
+</html>
