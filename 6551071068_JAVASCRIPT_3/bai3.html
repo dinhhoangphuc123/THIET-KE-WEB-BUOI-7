@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Insert row in a table - DOM & jQuery</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+  <table id="sampleTable" border="1">
+    <tr>
+        <td>Row1 cell1</td>
+        <td>Row1 cell2</td>
+    </tr>
+    <tr>
+        <td>Row2 cell1</td>
+        <td>Row2 cell2</td>
+    </tr>
+  </table><br>
+  <div>
+    <input id="btnDom" type="button" onclick="insert_Row()" value="Insert Row (DOM)">
+    <input id="btnJquery" type="button" value="Insert Row (jQuery)">
+  </div>
+  <script>
+    function insert_Row() {
+      let table = document.getElementById("sampleTable");
+      let newRow = table.insertRow(-1); 
+      let cell1 = newRow.insertCell(0);
+      let cell2 = newRow.insertCell(1);
+      let rowCount = table.rows.length;
+      cell1.innerHTML = `Row${rowCount} cell1`;
+      cell2.innerHTML = `Row${rowCount} cell2`;
+    }
+    $(document).ready(function () {
+      $("#btnJquery").click(function() {
+        let rowCount = $("#sampleTable tr").length + 1;
+        let newRow = `<tr>
+                        <td>Row${rowCount} cell1</td>
+                        <td>Row${rowCount} cell2</td>
+                      </tr>`;
+        $("#sampleTable").append(newRow);
+      });
+    });
+  </script>
+</body>
+</html>
