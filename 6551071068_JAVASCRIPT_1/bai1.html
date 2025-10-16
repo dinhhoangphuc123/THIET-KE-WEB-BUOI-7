@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>JS DOM paragraph style</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+  <p id="text">JavaScript Exercises - w3resource</p>
+  <div>
+    <button id="jsstyle" onclick="js_style()">Style</button>
+  </div>
+  <script>
+    function js_style() {
+      let a = document.getElementById("text");
+      a.style.fontSize = "24px";
+      a.style.fontFamily = "Verdana";
+      a.style.color = "blue";
+    }
+    $(document).ready(function () {
+      $('#jsstyle').click(function(){
+        $('#text').css({
+          "font-size": "24px",
+          "font-family": "Verdana",
+          "color": "blue"
+        });
+      });
+    });
+  </script>
+</body>
+</html>
